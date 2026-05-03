@@ -1,0 +1,36 @@
+<svg width="107" height="499" viewBox="0 0 107 499" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_g_226_84)">
+<rect x="90" y="17.0804" width="465" height="74" rx="16" transform="rotate(90 90 17.0804)" stroke="#D9C19D" stroke-width="8"/>
+<line x1="58.6623" y1="13.4142" x2="92.166" y2="46.9179" stroke="#D9C19D" stroke-width="4"/>
+<line x1="13.9103" y1="451.666" x2="47.414" y2="485.17" stroke="#D9C19D" stroke-width="4"/>
+<line x1="42.9084" y1="17.1603" x2="92.9184" y2="67.1703" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.4044" y1="431.666" x2="68.4145" y2="481.676" stroke="#D9C19D" stroke-width="4"/>
+<line x1="22.381" y1="21.6662" x2="93.4143" y2="92.6995" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.4142" y1="41.6662" x2="89.4475" y2="112.699" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.4142" y1="67.6994" x2="89.4475" y2="138.733" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.4142" y1="93.7326" x2="89.4475" y2="164.766" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.4142" y1="119.766" x2="89.4475" y2="190.799" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.4142" y1="145.799" x2="89.4475" y2="216.832" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.4142" y1="171.832" x2="89.4475" y2="242.865" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.4142" y1="197.865" x2="89.4475" y2="268.899" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.4142" y1="223.899" x2="89.4475" y2="294.932" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.4142" y1="249.932" x2="89.4475" y2="320.965" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.4142" y1="275.965" x2="89.4475" y2="346.998" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.4142" y1="301.998" x2="89.4475" y2="373.031" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.4142" y1="328.031" x2="89.4475" y2="399.065" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.4142" y1="354.065" x2="89.4475" y2="425.098" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.381" y1="379.666" x2="89.4143" y2="450.699" stroke="#D9C19D" stroke-width="4"/>
+<line x1="18.381" y1="405.666" x2="89.4143" y2="476.699" stroke="#D9C19D" stroke-width="4"/>
+</g>
+<defs>
+<filter id="filter0_g_226_84" x="0" y="0" width="106.828" height="498.584" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.25 0.25" numOctaves="3" seed="6420" />
+<feDisplacementMap in="shape" scale="24" xChannelSelector="R" yChannelSelector="G" result="displacedImage" width="100%" height="100%" />
+<feMerge result="effect1_texture_226_84">
+<feMergeNode in="displacedImage"/>
+</feMerge>
+</filter>
+</defs>
+</svg>
