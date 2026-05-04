@@ -26,6 +26,16 @@ export function ScrollEffects() {
       section.querySelectorAll<HTMLElement>('[data-svg-container]').forEach((svg) => {
         svg.style.opacity = '0'
       })
+
+      // Hide all direct children of frame initially (except first section)
+      if (index !== 0) {
+        Array.from(frame.children).forEach((child) => {
+          const el = child as HTMLElement
+          if (!el.hasAttribute('data-svg-container') && !el.classList.contains('blackboard')) {
+            el.style.opacity = '0'
+          }
+        })
+      }
     })
 
     const observer = new IntersectionObserver(
@@ -55,14 +65,38 @@ export function ScrollEffects() {
               })
             }, 200)
 
+            // Fade in all direct children of frame after SVG animations complete
+            setTimeout(() => {
+              Array.from(frame.children).forEach((child) => {
+                const el = child as HTMLElement
+                if (!el.hasAttribute('data-svg-container') && !el.classList.contains('blackboard')) {
+                  animate(el, {
+                    opacity: [0, 1],
+                    ease: 'easeInOutQuad',
+                    duration: 400,
+                  })
+                }
+              })
+            }, 1400)
+
             // Update scroll progress CSS var
             const totalSections = sections.length
             const progress = totalSections > 1 ? index / (totalSections - 1) : 0
             document.documentElement.style.setProperty('--scroll-progress', `${progress}`)
           } else {
-            // Section leaving view — hide SVGs
+            // Section leaving view — hide SVGs and content
             section.querySelectorAll<HTMLElement>('[data-svg-container]').forEach((container) => {
               container.style.opacity = '0'
+            })
+            Array.from(frame.children).forEach((child) => {
+              const el = child as HTMLElement
+              if (!el.hasAttribute('data-svg-container') && !el.classList.contains('blackboard')) {
+                animate(el, {
+                  opacity: [1, 0],
+                  ease: 'easeInOutQuad',
+                  duration: 300,
+                })
+              }
             })
           }
         })
@@ -80,6 +114,12 @@ export function ScrollEffects() {
         if (frame) {
           frame.style.opacity = ''
           frame.style.transform = ''
+          Array.from(frame.children).forEach((child) => {
+            const el = child as HTMLElement
+            if (!el.hasAttribute('data-svg-container') && !el.classList.contains('blackboard')) {
+              el.style.opacity = ''
+            }
+          })
         }
         section.querySelectorAll<HTMLElement>('[data-svg-container]').forEach((svg) => {
           svg.style.opacity = ''

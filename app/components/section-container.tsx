@@ -12,7 +12,7 @@ export function SectionContainer({ children, className, id }: SectionContainerPr
     <section
       id={id}
       className={cn(
-        'snap-start snap-always flex-shrink-0 w-full h-screen flex flex-col items-center justify-center px-[max(150px,15%)]',
+        'snap-start snap-always flex-shrink-0 w-full h-screen flex flex-col items-center justify-center px-[max(150px,10%)] py-[max(100px,5%)]',
         className
       )}
     >

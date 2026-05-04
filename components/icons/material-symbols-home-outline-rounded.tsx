@@ -1,9 +1,9 @@
 import * as React from "react";
 
 export function HomeOutlineRoundedIcon({
-  size = 30,
+  size = 24,
   color = "currentColor",
-  strokeWidth = 0.5,
+  strokeWidth = 0.7,
   className,
   ...props
 }: React.SVGProps<SVGSVGElement> & {

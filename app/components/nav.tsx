@@ -13,10 +13,10 @@ import { AnimatedSvg } from './home-hero-draw'
 const SECTION_IDS = ['home', 'experience', 'projects', 'other']
 
 const navItems = [
-  { id: 'home',       icon: <HomeOutlineRoundedIcon /> },
-  { id: 'experience', icon: <FolderOpenOutlineIcon /> },
-  { id: 'projects',   icon: <ComputerOutlineIcon /> },
-  { id: 'other',      icon: <HeadphonesOutlineIcon /> },
+  { id: 'home',       icon: <HomeOutlineRoundedIcon size={24} strokeWidth={0.7} color="currentColor" /> },
+  { id: 'experience', icon: <FolderOpenOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
+  { id: 'projects',   icon: <ComputerOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
+  { id: 'other',      icon: <HeadphonesOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
 ]
 
 function scrollToSection(id: string) {
@@ -41,16 +41,16 @@ function ArrowButton({
       disabled={disabled}
       aria-label={direction === 'up' ? 'Previous slide' : 'Next slide'}
       style={{ opacity: disabled ? 0 : undefined, pointerEvents: disabled ? 'none' : undefined }}
-      className="group flex items-center justify-center w-8 h-8 rounded-full bg-black/15 backdrop-blur-sm border border-black/30 transition-all duration-300 opacity-70 hover:opacity-100 hover:bg-black/30 hover:scale-110 cursor-pointer"
+      className="group flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 opacity-70 hover:opacity-100 hover:scale-110 cursor-pointer"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="18"
-        height="18"
+        width="24"
+        height="24"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2.5"
+        strokeWidth="4"
         strokeLinecap="round"
         strokeLinejoin="round"
         className={[
@@ -99,11 +99,11 @@ export function Navbar() {
     >
       <AnimatedSvg
         src="/assets/background.svg"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover blur-[1px]"
         aria-hidden="true"
       />
       <nav
-        className="flex flex-col items-center gap-2 px-4 py-6 relative z-10"
+        className="flex flex-col items-center gap-2 px-6 py-6 relative z-10"
         id="nav"
         aria-label="Page sections"
       >
@@ -125,10 +125,10 @@ export function Navbar() {
               aria-label={id}
               aria-current={activeId === id ? 'page' : undefined}
               className={[
-                'flex items-center justify-center rounded-full p-2 transition-all duration-300 cursor-pointer',
+                'flex items-center justify-center rounded-full p-1.5 transition-all duration-300 cursor-pointer',
                 activeId === id
-                  ? 'text-white bg-[#3D2817] scale-110 shadow-sm'
-                  : 'text-[#3D2817]/70 hover:text-[#3D2817] hover:bg-black/15',
+                  ? 'text-[#60330b] scale-110 shadow-sm'
+                  : 'text-[#533316] hover:text-[#3D2817]',
               ].join(' ')}
             >
               {icon}
