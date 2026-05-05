@@ -37,31 +37,31 @@ const socials = [
 
 export const HomePage = () => (
     <SectionContainer id="home">
-        <div className="flex w-full flex-row items-center justify-center gap-8">
-            <div className="space-y-8">
-                <h1 className={`${fredericka.className} text-[72px] leading-none text-[#FAEED6] md:text-[96px]`}>
+        <div className="flex w-full flex-col lg:flex-row items-center justify-center gap-6 md:gap-8 px-4 md:px-0">
+            <div className="space-y-5 lg:space-y-8 flex flex-col items-center lg:items-start">
+                <h1 className={`${fredericka.className} text-7xl text-center leading-none text-[#FAEED6]`}>
                     Michael
                     <br />
                     Zhang
                 </h1>
-                <div className="flex flex-row w-fit justify-center items-center gap-3 text-[#1D1712]">
+                <div className="flex flex-row w-fit justify-center items-center gap-2 md:gap-3 text-[#1D1712]">
                     {socials.map((social, index) => (
-                        <div key={social.href} className="flex items-center gap-3">
+                        <div key={social.href} className="flex items-center gap-2 md:gap-3">
                             <Link href={social.href} aria-label={social.name}>
                                 <Image
                                     src={social.icon}
                                     alt={social.name}
                                     width={32}
                                     height={32}
-                                    className="h-8 w-8"
+                                    className="h-5 w-5 md:h-6 md:w-6 lg:h-8 lg:w-8"
                                 />
                             </Link>
-                            {index < socials.length - 1 ? <CircleIcon size={5} fill="#000000" /> : null}
+                            {index < socials.length - 1 ? <CircleIcon size={4} fill="#000000" /> : null}
                         </div>
                     ))}
                 </div>
             </div>
-            <AnimatedSvg />
+            <AnimatedSvg className="w-full max-w-xs md:max-w-sm lg:max-w-60 xl:max-w-[580px]" />
         </div>
     </SectionContainer>
 )

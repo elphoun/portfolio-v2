@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { animate, stagger, svg } from 'animejs'
 
 type AnimatedSvgProps = {
@@ -15,19 +15,36 @@ type AnimatedSvgProps = {
    * If false, it only plays on 'svg:play' events (first one triggers load + play).
    */
   autoplay?: boolean
+  /**
+   * If true, delay is only applied on non-mobile displays (md and up)
+   */
+  delayOnDesktopOnly?: boolean
 }
 
 export function AnimatedSvg({
   src = '/assets/whimsicott.svg',
-  className = 'w-full max-w-[580px]',
+  className = 'w-full max-w-60 lg:max-w-[580px]',
   style,
   duration = 1200,
   delayStep = 20,
   autoplay = true,
+  delayOnDesktopOnly = false,
 }: AnimatedSvgProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   // Ref to the loaded svgRoot so replay doesn't need to re-fetch
   const svgRootRef = useRef<SVGSVGElement | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    // Check if mobile on mount and on resize
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768) // md breakpoint is 768px
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const container = containerRef.current
@@ -55,13 +72,16 @@ export function AnimatedSvg({
         return
       }
 
+      // Determine actual delay step based on device
+      const actualDelayStep = delayOnDesktopOnly && isMobile ? 0 : delayStep
+
       // Reset all drawables to hidden before replaying
       const drawables = drawableTargets.flatMap((target) => svg.createDrawable(target))
       animate(drawables, {
         draw: ['0 0', '0 1'],
         ease: 'inOutSine',
         duration,
-        delay: stagger(delayStep),
+        delay: stagger(actualDelayStep),
       })
     }
 
@@ -111,7 +131,7 @@ export function AnimatedSvg({
       container.removeEventListener('svg:play', onPlay)
       container.innerHTML = ''
     }
-  }, [src, duration, delayStep, autoplay])
+  }, [src, duration, delayStep, autoplay, isMobile, delayOnDesktopOnly])
 
   return <div ref={containerRef} className={className} style={style} aria-hidden="true" data-svg-container />
 }

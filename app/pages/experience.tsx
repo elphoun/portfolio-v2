@@ -7,75 +7,85 @@ const fredericka = Fredericka_the_Great({ subsets: ['latin'], weight: ['400'] })
 
 const experiences = [
     {
-        company: 'Faire',
-        role: 'Software Engineer Intern',
-        detail: 'Incoming',
-        logo: '/experience/faire-logo.svg',
-        className: 'w-48 -rotate-6 top-40 left-14',
-    },
-    {
-        company: 'Enter the Battlefield',
-        role: 'Software Engineer Intern',
-        detail: 'TCG order workflow and store credit system',
-        logo: '/experience/etb-logo.svg',
-        className: 'w-36 rotate-20 top-40 left-[max(30%,20px)]',
-    },
-    {
-        company: 'CXC 2026',
-        role: 'Lead Director',
-        detail: 'Community x Computing Conference',
-        logo: '/experience/cxc-logo.svg',
-        className: 'w-32 rotate-[10deg] bottom-20 left-[max(33%,20px)]',
+        company: 'Chatime',
+        role: 'Tearista',
+        detail: '🧋 drinks !',
+        logo: '/experience/chatime-logo.png',
     },
     {
         company: 'UW DSC',
         role: 'Software Engineer',
-        detail: 'Developer Student Clubs projects',
+        detail: '♟️https://viennalytics.vercel.app/ and Event Coordinator',
         logo: '/experience/dsc-logo.svg',
-        className: 'w-32 rotate-[-8deg] bottom-10 left-[max(4%,20px)]',
     },
     {
-        company: 'Chatime',
-        role: 'Tearista',
-        detail: 'Customer-facing operations and support',
-        logo: '/experience/chatime-logo.png',
-        className: 'w-28 rotate--12 bottom-12 left-[max(20%,20px)]',
+        company: 'CXC 2026',
+        role: 'Advisor and Previous Director',
+        detail: `🖤 Directed and currently advising CXC, Waterloo's largest AI Hackathon`,
+        logo: '/experience/cxc-logo.svg',
+    },
+    {
+        company: 'Hack the 6ix 2026',
+        role: 'Operations Executive',
+        detail: `🌿 Organizing !`,
+        logo: '/experience/ht6.jpg',
+    },
+    {
+        company: 'Enter the Battlefield',
+        role: 'Software Engineer Intern',
+        detail: '🎮 TCG Order Picking and Store Credit System',
+        logo: '/experience/etb-logo.svg',
+    },
+    {
+        company: 'Faire',
+        role: 'Software Engineer Intern',
+        detail: '🍃 incoming s26',
+        logo: '/experience/faire-logo.svg',
     },
 ]
 
 export const ExperiencePage = () => (
     <SectionContainer id="experience">
-        <div className="blackboard relative flex w-full flex-col overflow-hidden rounded-[34px] border-[10px] border-[#724B24] p-4 text-white md:rounded-[50px] md:border-[15px] h-full md:p-5">
-            <h1 className={`${fredericka.className} left-5 top-5 absolute text-8xl leading-none text-[#FAEED6]`}>
-                Experience
-            </h1>
-            {experiences.map((item) => (
-                <ExperienceCard key={item.company} {...item} />
-            ))}
-            <AnimatedSvg
-                src='/assets/machine.svg'
-                className='absolute top-[max(20%,20px)] right-[max(15%,30px)] w-96 h-auto'
-                style={{ transform: 'rotate(-12deg)' }}
-                duration={1200}
-                delayStep={20}
-                autoplay={true}
-            />
-            <AnimatedSvg
-                src='/assets/red_cogfly.svg'
-                className='absolute bottom-[max(8%,20px)] right-[max(5%,30px)] -scale-x-100 w-36 h-auto'
-                style={{ transform: 'rotate(-12deg)' }}
-                duration={1200}
-                delayStep={20}
-                autoplay={true}
-            />
-            <AnimatedSvg
-                src='/assets/purple_cogfly.svg'
-                className='absolute top-[max(20%,20px)] right-[max(5%,30px)] w-32 h-auto'
-                style={{ transform: 'rotate(20deg)' }}
-                duration={1200}
-                delayStep={20}
-                autoplay={true}
-            />
+        <div className="blackboard relative flex w-full flex-col lg:flex-row overflow-hidden rounded-2xl md:rounded-[34px] lg:rounded-[50px] border-4 md:border-[10px] lg:border-[15px] border-[#724B24] gap-4 md:gap-6 lg:gap-8 p-3 md:p-4 lg:p-5 text-white h-full">
+            <div className="flex flex-col w-full gap-3 md:gap-4">
+                <h1 className={`${fredericka.className} text-4xl md:text-6xl lg:text-8xl leading-none text-[#FAEED6]`}>
+                    Experience
+                </h1>
+                <div className="flex flex-wrap-reverse items-center justify-center gap-2 md:gap-3 lg:gap-4 w-full flex-1">
+                    {experiences.map((item) => (
+                        <ExperienceCard key={item.company} {...item} />
+                    ))}
+                </div>
+            </div>
+            <div className='w-full lg:w-2/3 h-full relative'>
+                <AnimatedSvg
+                    src='/assets/machine.svg'
+                    className='absolute bottom-[min(20%,150px)] right-[min(20%,100px)] w-72 lg:w-96 h-auto'
+                    style={{ transform: 'rotate(-12deg)' }}
+                    duration={1200}
+                    delayStep={0}
+                    autoplay={true}
+                    delayOnDesktopOnly={true}
+                />
+                <AnimatedSvg
+                    src='/assets/red_cogfly.svg'
+                    className='absolute bottom-[min(5%,10px)] right-[min(5%,10px)] -scale-x-100 w-28 lg:w-36 h-auto'
+                    style={{ transform: 'rotate(-12deg)' }}
+                    duration={1200}
+                    delayStep={0}
+                    autoplay={true}
+                    delayOnDesktopOnly={true}
+                />
+                <AnimatedSvg
+                    src='/assets/purple_cogfly.svg'
+                    className='absolute top-[max(10%,10px)] right-[min(5%,2px)] w-24 lg:w-32 h-auto'
+                    style={{ transform: 'rotate(20deg)' }}
+                    duration={1200}
+                    delayStep={0}
+                    autoplay={true}
+                    delayOnDesktopOnly={true}
+                />
+            </div>
         </div>
     </SectionContainer>
 )

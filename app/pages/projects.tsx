@@ -373,27 +373,27 @@ export const ProjectsPage = () => {
   const [hoveredLeaf, setHoveredLeaf] = useState<string | null>(null)
 
   const leaves: Leaf[] = [
-    { id: 'leaf1', href: 'https://github.com/claireleu/Duoslango', leafId: 'leaf1', component: Leaf1, className: "" },
-    { id: 'leaf2', href: '', leafId: 'leaf2', component: Leaf2, className: "w-fit -z-10" },
-    { id: 'leaf3', href: 'https://github.com/elphoun/viennalytics', leafId: 'leaf3', component: Leaf3, className: "w-40" },
-    { id: 'leaf4', href: '', leafId: 'leaf4', component: Leaf4, className: "w-40" },
-    { id: 'leaf5', href: 'https://github.com/elphoun/Pokedex-Calculator', leafId: 'leaf5', component: Leaf5, className: "w-96 -z-10" },
-    { id: 'leaf6', href: '', leafId: 'leaf6', component: Leaf6, className: "w-96" },
+    { id: 'leaf1', href: 'https://github.com/claireleu/Duoslango', leafId: 'leaf1', component: Leaf1, className: "w-32 md:w-96" },
+    { id: 'leaf2', href: '', leafId: 'leaf2', component: Leaf2, className: "w-32 md:w-fit md:-z-10" },
+    { id: 'leaf3', href: 'https://github.com/elphoun/viennalytics', leafId: 'leaf3', component: Leaf3, className: "w-20 md:w-40" },
+    { id: 'leaf4', href: '', leafId: 'leaf4', component: Leaf4, className: "w-20 md:w-40" },
+    { id: 'leaf5', href: 'https://github.com/elphoun/Pokedex-Calculator', leafId: 'leaf5', component: Leaf5, className: "w-32 md:w-96 md:-z-10" },
+    { id: 'leaf6', href: '', leafId: 'leaf6', component: Leaf6, className: "w-32 md:w-96" },
   ]
 
   return (
     <SectionContainer id="projects">
-      <div className="flex flex-col items-center justify-end w-full h-full relative">
-        <h1 className={`absolute left-0 top-1/2 -translate-y-1/2 ${fredericka.className} text-[72px] rotate--90 leading-none text-[#FAEED6] md:text-[96px]`}>
+      <div className="flex flex-col items-center justify-end w-full h-full relative px-4 md:px-0">
+        <h1 className={`absolute left-2 md:left-0 top-1/2 -translate-y-1/2 ${fredericka.className} text-4xl md:text-[72px] lg:text-[96px] rotate--90 leading-none text-[#FAEED6]`}>
           PROJECTS
         </h1>
-        <AnimatedSvg src="/projects/pot.svg" className='absolute h-72 w-auto' />
+        <AnimatedSvg src="/projects/pot.svg" className='absolute h-16 md:h-32 lg:h-72 w-auto' />
 
         {/* Leaves - positioned so right edge is at center */}
         {leaves.map((leaf, index) => (
           <div
             key={leaf.leafId}
-            className={`absolute h-auto bottom-64 left-1/2 ${leaf.className}`}
+            className={`absolute h-auto bottom-32 md:bottom-64 left-1/2 ${leaf.className}`}
             onMouseEnter={() => setHoveredLeaf(leaf.leafId)}
             onMouseLeave={() => setHoveredLeaf(null)}
             style={{

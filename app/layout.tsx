@@ -7,6 +7,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { baseUrl } from './sitemap'
 import { Navbar } from './components/nav'
 import { ScrollEffects } from '@/app/components/scroll-effects'
+import { ScrollPrompt } from './components/scroll-prompt'
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -55,6 +56,7 @@ export default function RootLayout({
       <body className="antialiased h-full overflow-hidden">
         <Navbar />
         <ScrollEffects />
+        <ScrollPrompt />
         <main className={cx(
           "flex flex-col snap-y snap-mandatory overflow-y-scroll items-center justify-start gap-0 min-w-0 h-screen w-full",
           "bg-[linear-gradient(200deg,#946D44_20%,#D9C19D_84%)]"

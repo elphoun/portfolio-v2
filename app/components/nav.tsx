@@ -95,7 +95,7 @@ export function Navbar() {
 
   return (
     <aside 
-      className="fixed right-6 top-1/2 -translate-y-1/2 z-50 rounded-lg overflow-hidden"
+      className="hidden md:block fixed right-2 top-1/2 -translate-y-1/2 z-50 rounded-lg overflow-hidden md:right-4"
     >
       <AnimatedSvg
         src="/assets/background.svg"
@@ -103,7 +103,7 @@ export function Navbar() {
         aria-hidden="true"
       />
       <nav
-        className="flex flex-col items-center gap-2 px-6 py-6 relative z-10"
+        className="flex flex-col items-center gap-1 px-2 py-4 relative z-10 md:gap-2 md:px-4 md:py-6"
         id="nav"
         aria-label="Page sections"
       >
@@ -115,7 +115,7 @@ export function Navbar() {
         />
 
         {/* Section icons */}
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-1 md:gap-2">
           {navItems.map(({ id, icon }) => (
             <button
               key={id}
@@ -125,7 +125,7 @@ export function Navbar() {
               aria-label={id}
               aria-current={activeId === id ? 'page' : undefined}
               className={[
-                'flex items-center justify-center rounded-full p-1.5 transition-all duration-300 cursor-pointer',
+                'flex items-center justify-center rounded-full p-1 md:p-1.5 transition-all duration-300 cursor-pointer',
                 activeId === id
                   ? 'text-[#60330b] scale-110 shadow-sm'
                   : 'text-[#533316] hover:text-[#3D2817]',
