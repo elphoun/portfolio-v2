@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { animate, stagger, svg } from 'animejs'
 
 type AnimatedSvgProps = {
@@ -33,12 +33,19 @@ export function AnimatedSvg({
   const containerRef = useRef<HTMLDivElement>(null)
   // Ref to the loaded svgRoot so replay doesn't need to re-fetch
   const svgRootRef = useRef<SVGSVGElement | null>(null)
-  const [isMobile, setIsMobile] = useState(false)
+  const playGenerationRef = useRef(0)
+  const pendingPlayRef = useRef(false)
+  const isMobileRef = useRef(false)
+
+  const debugLog = (event: string, details?: Record<string, unknown>) => {
+    if (typeof window === 'undefined') return
+    const payload = details ? { event, src, ...details } : { event, src }
+    console.log('[AnimatedSvg]', payload)
+  }
 
   useEffect(() => {
-    // Check if mobile on mount and on resize
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768) // md breakpoint is 768px
+      isMobileRef.current = window.innerWidth < 768
     }
 
     checkMobile()
@@ -54,7 +61,28 @@ export function AnimatedSvg({
 
     const playAnimation = () => {
       const svgRoot = svgRootRef.current
-      if (!svgRoot) return
+      if (!svgRoot) {
+        debugLog('playAnimation:missing-svg-root:set-pending')
+        pendingPlayRef.current = true
+        return
+      }
+
+      pendingPlayRef.current = false
+      delete container.dataset.pendingPlay
+
+      const generation = ++playGenerationRef.current
+      debugLog('playAnimation:start', {
+        generation,
+        autoplay,
+        delayOnDesktopOnly,
+        isMobile: isMobileRef.current,
+      })
+
+      const notifyComplete = () => {
+        if (generation !== playGenerationRef.current) return
+        debugLog('playAnimation:complete-dispatch', { generation })
+        container.dispatchEvent(new CustomEvent('svg:complete', { bubbles: true }))
+      }
 
       const drawableTargets = Array.from(
         svgRoot.querySelectorAll<SVGPathElement | SVGLineElement | SVGPolylineElement | SVGRectElement>(
@@ -63,48 +91,83 @@ export function AnimatedSvg({
       )
 
       if (drawableTargets.length === 0) {
+        debugLog('playAnimation:fallback-opacity', { generation })
         animate(svgRoot, {
           opacity: [0, 1],
           scale: [0.985, 1],
           ease: 'outQuad',
           duration: Math.min(duration, 700),
+          onComplete: notifyComplete,
         })
         return
       }
 
-      // Determine actual delay step based on device
-      const actualDelayStep = delayOnDesktopOnly && isMobile ? 0 : delayStep
+      // Clear pre-hide opacity so stroke draw is visible
+      drawableTargets.forEach((target) => {
+        target.style.opacity = ''
+      })
 
-      // Reset all drawables to hidden before replaying
+      const actualDelayStep = delayOnDesktopOnly && isMobileRef.current ? 0 : delayStep
+      debugLog('playAnimation:draw-targets', {
+        generation,
+        targetCount: drawableTargets.length,
+        actualDelayStep,
+        duration,
+      })
+
       const drawables = drawableTargets.flatMap((target) => svg.createDrawable(target))
       animate(drawables, {
         draw: ['0 0', '0 1'],
         ease: 'inOutSine',
         duration,
         delay: stagger(actualDelayStep),
+        onComplete: notifyComplete,
       })
     }
 
-    // svg:play fires every time the section enters view — always replay
-    const onPlay = () => playAnimation()
+    const onPlay = () => {
+      debugLog('event:svg-play-received', {
+        containerOpacity: container.style.opacity || '(empty)',
+      })
+      pendingPlayRef.current = true
+      playAnimation()
+    }
     container.addEventListener('svg:play', onPlay)
+
+    // ScrollEffects may dispatch svg:play before this effect runs
+    if (container.dataset.pendingPlay === 'true' || container.style.opacity === '1') {
+      pendingPlayRef.current = true
+      debugLog('init:pending-play-detected', {
+        datasetPendingPlay: container.dataset.pendingPlay ?? null,
+        containerOpacity: container.style.opacity || '(empty)',
+      })
+    }
 
     const run = async () => {
       if (!src) return
 
       let svgText: string
       try {
+        debugLog('fetch:start')
         const response = await fetch(src)
-        if (!response.ok) return
+        if (!response.ok) {
+          debugLog('fetch:non-ok-response', { status: response.status })
+          return
+        }
         svgText = await response.text()
       } catch {
+        debugLog('fetch:error')
         return
       }
 
       if (isCancelled) return
-      if (!svgText.includes('<svg')) return
+      if (!svgText.includes('<svg')) {
+        debugLog('fetch:missing-svg-tag')
+        return
+      }
 
       container.innerHTML = svgText
+      debugLog('fetch:svg-injected')
 
       const svgRoot = container.querySelector('svg')
       if (!svgRoot) return
@@ -114,12 +177,16 @@ export function AnimatedSvg({
       svgRoot.classList.add('block', 'h-full', 'w-full')
       svgRootRef.current = svgRoot
 
-      if (autoplay) {
+      if (autoplay || pendingPlayRef.current) {
+        debugLog('init:play-after-load', {
+          autoplay,
+          pendingPlay: pendingPlayRef.current,
+        })
         playAnimation()
       } else {
-        // Hide all paths until first play signal
         const paths = svgRoot.querySelectorAll<SVGElement>('path, line, polyline, rect')
         paths.forEach((p) => { p.style.opacity = '0' })
+        debugLog('init:hidden-paths-waiting-for-play', { pathCount: paths.length })
       }
     }
 
@@ -127,11 +194,12 @@ export function AnimatedSvg({
 
     return () => {
       isCancelled = true
+      debugLog('cleanup')
       svgRootRef.current = null
       container.removeEventListener('svg:play', onPlay)
       container.innerHTML = ''
     }
-  }, [src, duration, delayStep, autoplay, isMobile, delayOnDesktopOnly])
+  }, [src, duration, delayStep, autoplay, delayOnDesktopOnly])
 
   return <div ref={containerRef} className={className} style={style} aria-hidden="true" data-svg-container />
 }

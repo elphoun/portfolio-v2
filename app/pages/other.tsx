@@ -3,7 +3,7 @@ import { SectionContainer } from '../components/section-container'
 import { AnimatedSvg } from '../components/home-hero-draw'
 import { Fredericka_the_Great } from 'next/font/google'
 
-const fredericka = Fredericka_the_Great({ subsets: ['latin'], weight: ['400'] })
+const fredericka = Fredericka_the_Great({ subsets: ['latin'], weight: ['400'], adjustFontFallback: false })
 
 const projectsData = {
   title: 'PROJECTS',
@@ -66,7 +66,7 @@ export const OtherPage = () => (
         <AnimatedSvg
           src="/assets/coffee.svg"
           className="w-full max-w-xs md:max-w-sm lg:max-w-full h-auto"
-          autoplay={true}
+          autoplay={false}
           delayOnDesktopOnly={true}
         />
       </div>
@@ -76,7 +76,7 @@ export const OtherPage = () => (
         <AnimatedSvg
           src="/assets/projectbackground.svg"
           className="absolute w-full -z-10 h-auto"
-          autoplay={true}
+          autoplay={false}
           delayOnDesktopOnly={true}
         />
         {/* Content Overlay - Scrollable */}

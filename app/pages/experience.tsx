@@ -1,70 +1,72 @@
 import { SectionContainer } from '../components/section-container'
 import { AnimatedSvg } from '../components/home-hero-draw'
-import { ExperienceCard } from '../components/experience-card'
+import { ExperienceGallery } from '../components/experience-gallery'
 import { Fredericka_the_Great } from "next/font/google"
 
-const fredericka = Fredericka_the_Great({ subsets: ['latin'], weight: ['400'] })
+const fredericka = Fredericka_the_Great({ subsets: ['latin'], weight: ['400'], adjustFontFallback: false })
 
 const experiences = [
     {
+        company: 'Faire',
+        role: 'SWE Intern',
+        logo: '/experience/faire-logo.svg',
+        linkedin: 'https://ca.linkedin.com/company/fairewholesale',
+        priority: 3,
+    },
+    {
         company: 'Chatime',
         role: 'Tearista',
-        detail: '🧋 drinks !',
         logo: '/experience/chatime-logo.png',
+        linkedin: 'https://www.linkedin.com/company/chatime/',
+        priority: 1,
     },
     {
         company: 'UW DSC',
-        role: 'Software Engineer',
-        detail: '♟️https://viennalytics.vercel.app/ and Event Coordinator',
+        role: 'SWE',
         logo: '/experience/dsc-logo.svg',
+        linkedin: 'https://www.linkedin.com/company/waterloo-data-science-club/',
+        priority: 1,
     },
     {
         company: 'CXC 2026',
-        role: 'Advisor and Previous Director',
-        detail: `🖤 Directed and currently advising CXC, Waterloo's largest AI Hackathon`,
+        role: 'Director',
         logo: '/experience/cxc-logo.svg',
+        linkedin: 'https://www.linkedin.com/company/cxc-global',
+        priority: 2,
     },
     {
         company: 'Hack the 6ix 2026',
-        role: 'Operations Executive',
-        detail: `🌿 Organizing !`,
+        role: 'Operations',
         logo: '/experience/ht6.jpg',
+        linkedin: 'https://ca.linkedin.com/company/hackthe6ixofficial',
+        priority: 2,
     },
     {
         company: 'Enter the Battlefield',
-        role: 'Software Engineer Intern',
-        detail: '🎮 TCG Order Picking and Store Credit System',
+        role: 'SWE Intern',
         logo: '/experience/etb-logo.svg',
-    },
-    {
-        company: 'Faire',
-        role: 'Software Engineer Intern',
-        detail: '🍃 incoming s26',
-        logo: '/experience/faire-logo.svg',
+        linkedin: 'https://www.linkedin.com/search/results/all/?keywords=Enter%20the%20Battlefield',
+        priority: 2,
     },
 ]
 
 export const ExperiencePage = () => (
     <SectionContainer id="experience">
-        <div className="blackboard relative flex w-full flex-col lg:flex-row overflow-hidden rounded-2xl md:rounded-[34px] lg:rounded-[50px] border-4 md:border-[10px] lg:border-[15px] border-[#724B24] gap-4 md:gap-6 lg:gap-8 p-3 md:p-4 lg:p-5 text-white h-full">
-            <div className="flex flex-col w-full gap-3 md:gap-4">
+        <div className="blackboard relative flex w-full flex-col lg:flex-row overflow-hidden rounded-2xl md:rounded-[34px] lg:rounded-[50px] border-4 md:border-[10px] lg:border-[15px] border-[#724B24] gap-4 md:gap-8 lg:gap-12 p-4 md:p-5 lg:p-6 text-white h-full">
+            <div className="flex flex-col w-full gap-5 md:gap-8">
                 <h1 className={`${fredericka.className} text-4xl md:text-6xl lg:text-8xl leading-none text-[#FAEED6]`}>
                     Experience
                 </h1>
-                <div className="flex flex-wrap-reverse items-center justify-center gap-2 md:gap-3 lg:gap-4 w-full flex-1">
-                    {experiences.map((item) => (
-                        <ExperienceCard key={item.company} {...item} />
-                    ))}
-                </div>
+                <ExperienceGallery experiences={experiences} />
             </div>
             <div className='w-full lg:w-2/3 h-full relative'>
                 <AnimatedSvg
                     src='/assets/machine.svg'
-                    className='absolute bottom-[min(20%,150px)] right-[min(20%,100px)] w-72 lg:w-96 h-auto'
+                    className='absolute bottom-[min(20%,150px)] right-[min(20%,100px)] w-68 lg:w-92 h-auto'
                     style={{ transform: 'rotate(-12deg)' }}
                     duration={1200}
                     delayStep={0}
-                    autoplay={true}
+                    autoplay={false}
                     delayOnDesktopOnly={true}
                 />
                 <AnimatedSvg
@@ -73,7 +75,7 @@ export const ExperiencePage = () => (
                     style={{ transform: 'rotate(-12deg)' }}
                     duration={1200}
                     delayStep={0}
-                    autoplay={true}
+                    autoplay={false}
                     delayOnDesktopOnly={true}
                 />
                 <AnimatedSvg
@@ -82,7 +84,7 @@ export const ExperiencePage = () => (
                     style={{ transform: 'rotate(20deg)' }}
                     duration={1200}
                     delayStep={0}
-                    autoplay={true}
+                    autoplay={false}
                     delayOnDesktopOnly={true}
                 />
             </div>

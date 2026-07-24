@@ -9,7 +9,6 @@ export default function Page() {
       <HomePage />
       <ExperiencePage />
       <ProjectsPage />
-      <OtherPage />
     </div>
   )
 }

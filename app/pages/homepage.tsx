@@ -5,7 +5,7 @@ import Link from "next/link"
 import { CircleIcon } from "@/components/icons"
 import { AnimatedSvg } from "../components/home-hero-draw"
 
-const fredericka = Fredericka_the_Great({ subsets: ['latin'], weight: ['400'] })
+const fredericka = Fredericka_the_Great({ subsets: ['latin'], weight: ['400'], adjustFontFallback: false })
 
 const socials = [
     {
@@ -37,9 +37,9 @@ const socials = [
 
 export const HomePage = () => (
     <SectionContainer id="home">
-        <div className="flex w-full flex-col lg:flex-row items-center justify-center gap-6 md:gap-8 px-4 md:px-0">
-            <div className="space-y-5 lg:space-y-8 flex flex-col items-center lg:items-start">
-                <h1 className={`${fredericka.className} text-7xl text-center leading-none text-[#FAEED6]`}>
+        <div className="flex w-full flex-col lg:flex-row items-center justify-center gap-10 md:gap-18 px-4 md:px-0">
+            <div className="flex flex-col gap-6">
+                <h1 className={`${fredericka.className} text-7xl leading-none text-[#FAEED6]`}>
                     Michael
                     <br />
                     Zhang
@@ -61,7 +61,7 @@ export const HomePage = () => (
                     ))}
                 </div>
             </div>
-            <AnimatedSvg className="w-full max-w-xs md:max-w-sm lg:max-w-60 xl:max-w-[580px]" />
+            <AnimatedSvg className="w-full max-w-xs md:max-w-sm lg:max-w-60 xl:max-w-[450px]" autoplay={false} />
         </div>
     </SectionContainer>
 )

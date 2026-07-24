@@ -5,7 +5,7 @@ import { SectionContainer } from '../components/section-container'
 import { AnimatedSvg } from '../components/home-hero-draw'
 import { Fredericka_the_Great } from "next/font/google"
 
-const fredericka = Fredericka_the_Great({ subsets: ['latin'], weight: ['400'] })
+const fredericka = Fredericka_the_Great({ subsets: ['latin'], weight: ['400'], adjustFontFallback: false })
 
 type Leaf = {
   id: string
@@ -384,27 +384,31 @@ export const ProjectsPage = () => {
   return (
     <SectionContainer id="projects">
       <div className="flex flex-col items-center justify-end w-full h-full relative px-4 md:px-0">
-        <h1 className={`absolute left-2 md:left-0 top-1/2 -translate-y-1/2 ${fredericka.className} text-4xl md:text-[72px] lg:text-[96px] rotate--90 leading-none text-[#FAEED6]`}>
-          PROJECTS
-        </h1>
-        <AnimatedSvg src="/projects/pot.svg" className='absolute h-16 md:h-32 lg:h-72 w-auto' />
+        <div className="relative w-full h-full">
+          <h1 className={`absolute left-2 md:left-0 top-1/2 -translate-y-1/2 ${fredericka.className} text-4xl md:text-[72px] lg:text-[96px] rotate--90 leading-none text-[#FAEED6]`}>
+            PROJECTS
+          </h1>
+          <AnimatedSvg src="/projects/pot.svg" className='absolute h-16 md:h-32 lg:h-72 w-auto' autoplay={false} />
 
-        {/* Leaves - positioned so right edge is at center */}
-        {leaves.map((leaf, index) => (
-          <div
-            key={leaf.leafId}
-            className={`absolute h-auto bottom-32 md:bottom-64 left-1/2 ${leaf.className}`}
-            onMouseEnter={() => setHoveredLeaf(leaf.leafId)}
-            onMouseLeave={() => setHoveredLeaf(null)}
-            style={{
-              transform: index < leaves.length / 2 ? 'translateX(-100%)' : 'translateX(0%)',
-              opacity: hoveredLeaf && hoveredLeaf !== leaf.leafId ? 0.5 : 1,
-              transition: 'opacity 200ms ease-out',
-            } as React.CSSProperties}
-          >
-            {leaf.component({ isHovered: hoveredLeaf === leaf.leafId, href: leaf.href })}
+          {/* Leaves - positioned so right edge is at center */}
+          <div className="absolute inset-0">
+            {leaves.map((leaf, index) => (
+              <div
+                key={leaf.leafId}
+                className={`absolute h-auto bottom-32 md:bottom-64 left-1/2 ${leaf.className}`}
+                onMouseEnter={() => setHoveredLeaf(leaf.leafId)}
+                onMouseLeave={() => setHoveredLeaf(null)}
+                style={{
+                  transform: index < leaves.length / 2 ? 'translateX(-100%)' : 'translateX(0%)',
+                  opacity: hoveredLeaf && hoveredLeaf !== leaf.leafId ? 0.5 : 1,
+                  transition: 'opacity 200ms ease-out',
+                } as React.CSSProperties}
+              >
+                {leaf.component({ isHovered: hoveredLeaf === leaf.leafId, href: leaf.href })}
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </SectionContainer>
   )
