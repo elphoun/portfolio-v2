@@ -28,7 +28,7 @@ const experiences = [
         priority: 1,
     },
     {
-        company: 'CXC hackathon',
+        company: 'cxc hackathon',
         roles: ['Director'],
         logo: '/experience/cxc-logo.svg',
         linkedin: 'https://www.linkedin.com/company/cxc-global',
