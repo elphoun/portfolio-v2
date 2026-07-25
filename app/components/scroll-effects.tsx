@@ -33,7 +33,11 @@ export function ScrollEffects() {
     }
 
     const isContentChild = (el: HTMLElement) =>
-      !el.hasAttribute('data-svg-container') && !el.classList.contains('blackboard')
+      !el.hasAttribute('data-svg-container') &&
+      !el.classList.contains('blackboard') &&
+      // A wrapper that holds SVG containers must stay visible so the draw
+      // animation is seen as it happens, rather than fading in once complete.
+      !el.querySelector('[data-svg-container]')
 
     const fadeInFrameChildren = (frame: HTMLElement) => {
       Array.from(frame.children).forEach((child) => {

@@ -3,20 +3,16 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import {
-  ComputerOutlineIcon,
   HomeOutlineRoundedIcon,
-  HeadphonesOutlineIcon,
   FolderOpenOutlineIcon,
 } from '../../components/icons'
 import { AnimatedSvg } from './home-hero-draw'
 
-const SECTION_IDS = ['home', 'experience', 'projects', 'other']
+const SECTION_IDS = ['home', 'experience']
 
 const navItems = [
   { id: 'home',       icon: <HomeOutlineRoundedIcon size={24} strokeWidth={0.7} color="currentColor" /> },
   { id: 'experience', icon: <FolderOpenOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
-  { id: 'projects',   icon: <ComputerOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
-  { id: 'other',      icon: <HeadphonesOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
 ]
 
 function scrollToSection(id: string) {
