@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-const SECTION_IDS = ['home', 'experience']
+const SECTION_IDS = ['home', 'experience', 'games']
 
 function scrollToSection(id: string) {
   const main = document.querySelector<HTMLElement>('main')

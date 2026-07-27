@@ -5,14 +5,16 @@ import Image from 'next/image'
 import {
   HomeOutlineRoundedIcon,
   FolderOpenOutlineIcon,
+  EcoOutlineIcon,
 } from '../../components/icons'
 import { AnimatedSvg } from './home-hero-draw'
 
-const SECTION_IDS = ['home', 'experience']
+const SECTION_IDS = ['home', 'experience', 'games']
 
 const navItems = [
   { id: 'home',       icon: <HomeOutlineRoundedIcon size={24} strokeWidth={0.7} color="currentColor" /> },
   { id: 'experience', icon: <FolderOpenOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
+  { id: 'games',      icon: <EcoOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
 ]
 
 function scrollToSection(id: string) {

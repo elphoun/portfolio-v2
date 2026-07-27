@@ -22,8 +22,8 @@ export const ExperienceGallery = ({ experiences }: ExperienceGalleryProps) => {
     <ul className={`flex flex-1 min-h-0 flex-col ${kranky.className}`}>
       {experiences.map((item) => (
         <li key={item.company} className="flex flex-1 min-h-0 items-center">
-          <div className="flex w-full items-center gap-3 md:gap-4 lg:gap-5 border-b border-white/15 px-1 py-2 text-white last:border-b-0">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center md:h-11 md:w-11 lg:h-12 lg:w-12">
+          <div className="flex w-full items-center gap-3 border-b border-white/15 px-1 py-2 text-white last:border-b-0">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center md:h-9 md:w-9 lg:h-10 lg:w-10">
               <Image
                 src={item.logo}
                 alt={`${item.company} logo`}
