@@ -5,16 +5,18 @@ import Image from 'next/image'
 import {
   HomeOutlineRoundedIcon,
   FolderOpenOutlineIcon,
-  EcoOutlineIcon,
+  // EcoOutlineIcon, // temporarily unused while the Games section is hidden
 } from '../../components/icons'
 import { AnimatedSvg } from './home-hero-draw'
 
-const SECTION_IDS = ['home', 'experience', 'games']
+// 'games' temporarily removed while the Games section is hidden.
+const SECTION_IDS = ['home', 'experience']
 
 const navItems = [
   { id: 'home',       icon: <HomeOutlineRoundedIcon size={24} strokeWidth={0.7} color="currentColor" /> },
   { id: 'experience', icon: <FolderOpenOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
-  { id: 'games',      icon: <EcoOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
+  // 'games' temporarily hidden while the Games section is removed.
+  // { id: 'games',      icon: <EcoOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
 ]
 
 function scrollToSection(id: string) {

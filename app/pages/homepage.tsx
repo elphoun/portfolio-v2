@@ -10,27 +10,22 @@ const fredericka = Fredericka_the_Great({ subsets: ['latin'], weight: ['400'], a
 const socials = [
     {
         name: 'LinkedIn',
-        href: 'https://www.linkedin.com/in/michael-zhang-',
+        href: 'https://www.linkedin.com/in/fangjing-michael-zhang/',
         icon: '/socials/linkedin.png',
     },
     {
         name: 'GitHub',
-        href: 'https://github.com/michael-zhang-',
+        href: 'https://github.com/elphoun',
         icon: '/socials/github.svg',
     },
     {
         name: 'Instagram',
-        href: 'https://www.instagram.com/michael-zhang-',
+        href: 'https://www.instagram.com/kale.m.zh',
         icon: '/socials/instagram.svg',
     },
     {
-        name: 'Discord',
-        href: 'https://discord.com/users/michael-zhang-',
-        icon: '/socials/discord.svg',
-    },
-    {
         name: 'Spotify',
-        href: 'https://open.spotify.com/user/michael-zhang-',
+        href: 'https://open.spotify.com/user/2qhjj8wzcdif3odeyivfrre85?si=b946bc09e69d4c26',
         icon: '/socials/spotify.svg',
     },
 ]
@@ -47,7 +42,7 @@ export const HomePage = () => (
                 <div className="flex flex-row w-fit justify-center items-center gap-2 md:gap-3">
                     {socials.map((social, index) => (
                         <div key={social.href} className="flex items-center gap-2 md:gap-3">
-                            <Link href={social.href} aria-label={social.name}>
+                            <Link href={social.href} target="_blank" aria-label={social.name}>
                                 <Image
                                     src={social.icon}
                                     alt={social.name}

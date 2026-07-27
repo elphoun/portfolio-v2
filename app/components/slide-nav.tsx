@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 
-const SECTION_IDS = ['home', 'experience', 'games']
+// 'games' temporarily removed while the Games section is hidden.
+const SECTION_IDS = ['home', 'experience']
 
 function scrollToSection(id: string) {
   const main = document.querySelector<HTMLElement>('main')
