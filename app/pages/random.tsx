@@ -53,7 +53,9 @@ export const RandomPage = () => {
         }))
 
     return (
-        <SectionContainer className="p-0 md:pr-10 md:p-0 lg:pr-20 lg:pl-0" id="random">
+        // overflow-hidden lets the oversized mobile disc bleed past the viewport
+        // edges without making the page horizontally scrollable.
+        <SectionContainer className="overflow-hidden p-0 md:pr-10 md:p-0 lg:pr-20 lg:pl-0" id="random">
             {/* ScrollEffects transforms this element (it is the section's first
                 child), which makes it the containing block for the fixed disc, so
                 it has to stay in flow and span the section. */}
@@ -62,7 +64,7 @@ export const RandomPage = () => {
                     it sits at a negative z-index, so it has to let clicks through
                     to reach the disc's play control. */}
                 <div className="pointer-events-none absolute bottom-0 left-0 flex flex-col w-full flex-1 justify-end min-h-0 md:-left-20">
-                    <h1 className={`${fredericka.className} text-[#FAEED6] md:pl-24 text-[clamp(2.25rem,6vw,6rem)]`}>
+                    <h1 className={`${fredericka.className} text-[#FAEED6] text-center md:pl-24 md:text-left text-[clamp(2.25rem,6vw,6rem)]`}>
                         Random :)
                     </h1>
                     <DisplayCase
@@ -72,9 +74,11 @@ export const RandomPage = () => {
                         className="pointer-events-auto w-full h-auto md:w-[50%]"
                     />
                 </div>
+                {/* On phones the disc is centered in the space above the display
+                    case; on desktop it hangs off the top-right as a backdrop. */}
                 <SpotifyDisc
                     track={selected}
-                    className="fixed -z-10 top-[8%] left-1/2 -translate-x-1/2 md:top-0 md:left-auto md:right-0 md:translate-x-0"
+                    className="fixed -z-10 top-[36%] left-1/2 -translate-x-1/2 -translate-y-1/2 md:top-0 md:left-auto md:right-0 md:translate-x-0 md:translate-y-0"
                 />
             </div>
         </SectionContainer>

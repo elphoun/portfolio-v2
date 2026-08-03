@@ -23,6 +23,11 @@ const FADE_MS = 300
 // The disc's resting opacity (it sits behind the page as a spinning backdrop).
 const DISC_OPACITY = 0.7
 
+// Default diameter. On phones the disc is deliberately wider than the viewport
+// so it bleeds off both edges; the section clips the overflow. From `md` up it
+// takes the 60vw the desktop composition is built around.
+const DEFAULT_SIZE_CLASS = 'h-[135vw] w-[135vw] md:h-[60vw] md:w-[60vw]'
+
 // Subtle grayscale film grain used to texture the crisp album art so it blends
 // with the hand-drawn disc. Encoded SVG feTurbulence tile.
 const GRAIN =
@@ -32,7 +37,10 @@ type SpotifyDiscProps = {
     /** The track to display; its color paints the disc and its art is the label. */
     track: DiscTrack | null
     className?: string
-    /** Diameter of the disc as any CSS length (responsive by default). */
+    /**
+     * Diameter of the disc as any CSS length. Overrides the responsive default
+     * (see DEFAULT_SIZE_CLASS).
+     */
     size?: string
     /** Seconds per rotation. */
     spinSeconds?: number
@@ -46,7 +54,7 @@ type SpotifyDiscProps = {
 export function SpotifyDisc({
     track,
     className = '',
-    size = 'min(70vw, max(60vw, 340px))',
+    size,
     spinSeconds = 16,
 }: SpotifyDiscProps) {
     const containerRef = useRef<HTMLDivElement>(null)
@@ -192,9 +200,9 @@ export function SpotifyDisc({
 
     return (
         <>
-        <div className={`flex flex-col items-center gap-3 max-w-[100vw] max-h-screen ${className}`}>
+        <div className={`flex flex-col items-center gap-3 ${className}`}>
             <div
-                className={`relative animate-spin`}
+                className={`relative animate-spin ${size ? '' : DEFAULT_SIZE_CLASS}`}
                 style={{
                     width: size,
                     height: size,
@@ -254,7 +262,7 @@ export function SpotifyDisc({
             It sits outside the disc wrapper on purpose -- the disc is a backdrop
             at a negative z-index, and an iframe buried in there can't be clicked. */}
         <div
-            className={`fixed bottom-20 right-20 z-20 w-full max-w-[20rem] overflow-hidden rounded-xl shadow-md transition-opacity duration-300 ${
+            className={`fixed bottom-4 left-1/2 z-20 w-[calc(100%-1.5rem)] max-w-[20rem] -translate-x-1/2 overflow-hidden rounded-xl shadow-md transition-opacity duration-300 md:bottom-20 md:left-auto md:right-20 md:w-full md:translate-x-0 ${
                 track ? 'opacity-100' : 'pointer-events-none opacity-0'
             }`}
         >
