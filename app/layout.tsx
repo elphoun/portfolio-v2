@@ -1,7 +1,4 @@
 import './global.css'
-import 'lightgallery/css/lightgallery.css'
-import 'lightgallery/css/lg-thumbnail.css'
-import 'lightgallery/css/lg-zoom.css'
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
@@ -15,15 +12,15 @@ import { ScrollPrompt } from './components/scroll-prompt'
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: 'Michael Zhang Portfolio',
-    template: '%s | Michael Zhang Portfolio',
+    default: 'kale',
+    template: '%s | kale',
   },
-  description: 'Personal portfolio site.',
+  description: 'why you stalkin',
   openGraph: {
-    title: 'Michael Zhang Portfolio',
-    description: 'Personal portfolio site.',
+    title: 'kale',
+    description: 'why you stalkin',
     url: baseUrl,
-    siteName: 'My Portfolio',
+    siteName: 'kale port',
     locale: 'en_US',
     type: 'website',
   },

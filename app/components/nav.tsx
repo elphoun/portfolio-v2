@@ -5,18 +5,18 @@ import Image from 'next/image'
 import {
   HomeOutlineRoundedIcon,
   FolderOpenOutlineIcon,
-  // EcoOutlineIcon, // temporarily unused while the Games section is hidden
+  EcoOutlineIcon,
 } from '../../components/icons'
-import { AnimatedSvg } from './home-hero-draw'
+import { AnimatedSvg } from './animated-svg'
 
-// 'games' temporarily removed while the Games section is hidden.
-const SECTION_IDS = ['home', 'experience']
+// Must stay in the same order as the sections rendered by app/page.tsx, since
+// the up/down arrows step through this list by index.
+const SECTION_IDS = ['home', 'experience', 'random']
 
 const navItems = [
   { id: 'home',       icon: <HomeOutlineRoundedIcon size={24} strokeWidth={0.7} color="currentColor" /> },
   { id: 'experience', icon: <FolderOpenOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
-  // 'games' temporarily hidden while the Games section is removed.
-  // { id: 'games',      icon: <EcoOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
+  { id: 'random',     icon: <EcoOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
 ]
 
 function scrollToSection(id: string) {

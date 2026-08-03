@@ -3,7 +3,7 @@ import Image from "next/image"
 import { Fredericka_the_Great } from "next/font/google"
 import Link from "next/link"
 import { CircleIcon } from "@/components/icons"
-import { AnimatedSvg } from "../components/home-hero-draw"
+import { AnimatedSvg } from "../components/animated-svg"
 
 const fredericka = Fredericka_the_Great({ subsets: ['latin'], weight: ['400'], adjustFontFallback: false })
 

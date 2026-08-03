@@ -1,13 +1,15 @@
 'use client'
 
 import type { CSSProperties, KeyboardEvent } from 'react'
-import { AnimatedSvg } from './home-hero-draw'
+import { useEffect, useRef, useState } from 'react'
+import { AnimatedSvg } from './animated-svg'
 
 /**
- * The six pedestals inside /public/games/displaycase.svg, keyed by position.
- * Coordinates are in the display case's own viewBox space (2386 x 1040).
- * `cx` is the pedestal's horizontal center, `restY` is the plate surface an item
- * "sits" on, and `ceilY` is the top of the usable space above that plate.
+ * The six pedestals inside /public/random/displaycase.svg, keyed by position.
+ * Coordinates are in the overlay's viewBox space (VIEWBOX_WIDTH x VIEWBOX_HEIGHT
+ * below), which the case SVG is stretched to fill.
+ * `cx` is the pedestal's horizontal center (the cup), `restY` is the cup rim an
+ * item "sits" on, and `ceilY` is the top of the usable space above that cup.
  */
 export type Slot =
   | 'top-left'
@@ -17,24 +19,39 @@ export type Slot =
   | 'bottom-center'
   | 'bottom-right'
 
-const VIEWBOX_WIDTH = 2386
-const VIEWBOX_HEIGHT = 1040
+const VIEWBOX_WIDTH = 1550
+const VIEWBOX_HEIGHT = 850
+const CX1 = 675;
+const CX2 = 930;
+const CX3 = 1200;
+const CY1 = 130;
+const CY2 = 315;
+
+// How much usable space sits above each pedestal rim: the ceiling (top of the
+// slot) is this many units above restY. Larger = taller covers allowed.
+const CEIL_OFFSET = 85;
 
 const SLOTS: Record<Slot, { cx: number; restY: number; ceilY: number }> = {
-  'top-left': { cx: 1270, restY: 150, ceilY: 22 },
-  'top-center': { cx: 1553, restY: 150, ceilY: 22 },
-  'top-right': { cx: 1842, restY: 150, ceilY: 22 },
-  'bottom-left': { cx: 1273, restY: 337, ceilY: 240 },
-  'bottom-center': { cx: 1556, restY: 337, ceilY: 240 },
-  'bottom-right': { cx: 1845, restY: 337, ceilY: 240 },
+  'top-left': { cx: CX1, restY: CY1, ceilY: CY1 - CEIL_OFFSET },
+  'top-center': { cx: CX2, restY: CY1, ceilY: CY1 - CEIL_OFFSET },
+  'top-right': { cx: CX3, restY: CY1, ceilY: CY1 - CEIL_OFFSET },
+  'bottom-left': { cx: CX1, restY: CY2, ceilY: CY2 - CEIL_OFFSET },
+  'bottom-center': { cx: CX2, restY: CY2, ceilY: CY2 - CEIL_OFFSET },
+  'bottom-right': { cx: CX3, restY: CY2, ceilY: CY2 - CEIL_OFFSET },
 }
 
-const COLUMN_WIDTH = 240
+const COLUMN_WIDTH = 220
+
+// Must match the transforms applied in the <style> block below so layout can
+// reserve room for them: covers scale up on hover and drift upward while
+// floating. Without this headroom, an enlarged/raised cover clips the case.
+const HOVER_SCALE = 1.1
+const FLOAT_RISE = 11
 
 export type DisplayCaseItem = {
   /** Stable id used for selection. */
   id: string
-  /** Path to the image to show, e.g. '/games/pokemon.svg' */
+  /** Image to show on the pedestal, e.g. a Spotify album art URL. */
   src: string
   /** Accessible label for the item. */
   alt?: string
@@ -65,20 +82,24 @@ function layoutSlot(count: number, slot: Slot, gap: number) {
 
   const cellW = (COLUMN_WIDTH - gap * (cols - 1)) / cols
   const availableH = restY - ceilY
-  const cellH = Math.min(cellW, availableH)
 
-  const gridW = cellW * cols + gap * (cols - 1)
+  // Shrink the cover so that, once it floats up and scales on hover, it still
+  // fits between the case ceiling (ceilY) and the pedestal rim (restY).
+  const maxSize = (availableH - FLOAT_RISE) / HOVER_SCALE
+  const size = Math.max(0, Math.min(cellW, maxSize))
+
+  // Bottom-align to the pedestal, but leave room for the hover scale so the
+  // enlarged cover doesn't overhang the rim.
+  const cy = restY - (size * HOVER_SCALE) / 2
+
+  const gridW = size * cols + gap * (cols - 1)
   const startX = cx - gridW / 2
-  const startY = restY - cellH
 
-  return Array.from({ length: count }, (_, i) => {
-    const size = Math.min(cellW, cellH)
-    return {
-      cx: startX + i * (cellW + gap) + cellW / 2,
-      cy: startY + cellH / 2,
-      size,
-    }
-  })
+  return Array.from({ length: count }, (_, i) => ({
+    cx: startX + i * (size + gap) + size / 2,
+    cy,
+    size,
+  }))
 }
 
 export function DisplayCase({
@@ -90,6 +111,28 @@ export function DisplayCase({
   style,
 }: DisplayCaseProps) {
   const interactive = typeof onSelect === 'function'
+
+  // Items stay hidden until the case itself finishes drawing in. The case's
+  // AnimatedSvg dispatches a bubbling `svg:complete` when its draw finishes;
+  // `svg:play` is non-bubbling, so we catch it in the capture phase to re-hide
+  // the items whenever the case replays (e.g. scrolling back into view).
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const [revealed, setRevealed] = useState(false)
+
+  useEffect(() => {
+    const wrapper = wrapperRef.current
+    if (!wrapper) return
+
+    const onPlay = () => setRevealed(false)
+    const onComplete = () => setRevealed(true)
+
+    wrapper.addEventListener('svg:play', onPlay, true) // capture: svg:play doesn't bubble
+    wrapper.addEventListener('svg:complete', onComplete)
+    return () => {
+      wrapper.removeEventListener('svg:play', onPlay, true)
+      wrapper.removeEventListener('svg:complete', onComplete)
+    }
+  }, [])
 
   const groups = new Map<Slot, DisplayCaseItem[]>()
   for (const item of items) {
@@ -107,14 +150,14 @@ export function DisplayCase({
   }
 
   return (
-    <div className={className} style={style}>
+    <div className={className} style={style} ref={wrapperRef}>
       <div className="relative w-full">
         {/* The case itself, drawn in with the shared stroke animation. */}
         <AnimatedSvg
-          src="/games/displaycase.svg"
-          className="absolute inset-0 h-full w-full"
-          duration={1200}
-          delayStep={2}
+          src="/random/displaycase.svg"
+          className="absolute bottom-0 left-0 inset-0 h-full w-full"
+          duration={800}
+          delayStep={1}
           autoplay={false}
           delayOnDesktopOnly={true}
         />
@@ -124,7 +167,7 @@ export function DisplayCase({
           viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`}
           className="relative block h-auto w-full"
           role={interactive ? 'group' : 'img'}
-          aria-label="Game display case"
+          aria-label="Top tracks display case"
         >
           <defs>
             <filter id="display-item-shadow" x="-20%" y="-20%" width="140%" height="140%">
@@ -137,6 +180,24 @@ export function DisplayCase({
             </radialGradient>
           </defs>
           <style>{`
+            /* Hold all items hidden until the case has drawn in. */
+            .di-items { opacity: 0; }
+            .di-items.di-revealed { opacity: 1; transition: opacity 250ms ease; }
+            .di-items:not(.di-revealed) { pointer-events: none; }
+
+            /* Covers gently levitate above their pedestals once revealed. */
+            @keyframes di-float {
+              0%, 100% { transform: translateY(0); }
+              50% { transform: translateY(-11px); }
+            }
+            .di-items.di-revealed .di-item {
+              animation: di-float 3.4s ease-in-out infinite;
+              will-change: transform;
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .di-items.di-revealed .di-item { animation: none; }
+            }
+
             .di-item { transition: opacity 160ms ease; }
             .di-interactive .di-item { cursor: pointer; opacity: 0.55; }
             .di-interactive .di-item.is-selected { opacity: 1; }
@@ -154,16 +215,24 @@ export function DisplayCase({
             .di-interactive .di-item:focus-visible .di-art { transform: scale(1.1); }
           `}</style>
 
-          <g className={interactive ? 'di-interactive' : undefined}>
-            {[...groups.entries()].flatMap(([slot, groupItems]) => {
-              const placements = layoutSlot(groupItems.length, slot, gap)
-              return groupItems.map((item, i) => {
-                const { cx, cy, size } = placements[i]
+          <g
+            className={`di-items${revealed ? ' di-revealed' : ''}${
+              interactive ? ' di-interactive' : ''
+            }`}
+          >
+            {[...groups.entries()]
+              .flatMap(([slot, groupItems]) => {
+                const placements = layoutSlot(groupItems.length, slot, gap)
+                return groupItems.map((item, i) => ({ item, ...placements[i] }))
+              })
+              .map(({ item, cx, cy, size }, idx) => {
                 const isSelected = item.id === selectedId
                 return (
                   <g
                     key={item.id}
-                    className={`di-item${isSelected ? ' is-selected' : ''}`}
+                    className={`di-item outline-0 ${isSelected ? 'is-selected' : ''}`}
+                    // Stagger the float so covers bob out of phase.
+                    style={{ animationDelay: `${(idx % 6) * 0.35}s` }}
                     onClick={interactive ? () => onSelect?.(item.id) : undefined}
                     onKeyDown={interactive ? onKeyActivate(item.id) : undefined}
                     role={interactive ? 'button' : undefined}
@@ -194,8 +263,7 @@ export function DisplayCase({
                     </image>
                   </g>
                 )
-              })
-            })}
+              })}
           </g>
         </svg>
       </div>

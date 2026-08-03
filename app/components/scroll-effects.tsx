@@ -46,7 +46,7 @@ export function ScrollEffects() {
           animate(el, {
             opacity: [0, 1],
             ease: 'easeInOutQuad',
-            duration: 400,
+            duration: 250,
           })
         }
       })
@@ -108,7 +108,7 @@ export function ScrollEffects() {
         opacity: [0, 1],
         rotateZ: index % 2 === 0 ? [-0.5, 0] : [0.5, 0],
         ease: 'outExpo',
-        duration: 700,
+        duration: 500,
       })
 
       state.svgRevealTimeout = setTimeout(() => {
@@ -140,7 +140,7 @@ export function ScrollEffects() {
           container.style.opacity = '1'
           container.dispatchEvent(new CustomEvent('svg:play', { bubbles: false }))
         })
-      }, 200)
+      }, 100)
 
       const totalSections = sections.length
       const progress = totalSections > 1 ? index / (totalSections - 1) : 0

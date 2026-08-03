@@ -1,42 +1,78 @@
-# Portfolio Blog Starter
+# Michael Zhang — Portfolio
 
-This is a porfolio site template complete with a blog. Includes:
+A single-page personal portfolio built with the Next.js App Router. The page is
+a vertical snap-scroll deck of full-screen sections, and most of the artwork is
+hand-drawn SVG that draws itself in, stroke by stroke, as each section scrolls
+into view.
 
-- MDX and Markdown support
-- Optimized for SEO (sitemap, robots, JSON-LD schema)
-- RSS Feed
-- Dynamic OG images
-- Syntax highlighting
-- Tailwind v4
-- Vercel Speed Insights / Web Analytics
-- Geist font
+Live at [michaelzhang.dev](https://michaelzhang.dev).
 
-## Demo
+## Sections
 
-https://portfolio-blog-starter.vercel.app
+The deck is assembled in `app/page.tsx` from three sections, in order:
 
-## How to Use
+- **Home** (`app/pages/homepage.tsx`) — name, social links, and the animated
+  Whimsicott drawing.
+- **Experience** (`app/pages/experience.tsx`) — a chalkboard listing roles, with
+  an animated machine and cogflies alongside it.
+- **Random** (`app/pages/random.tsx`) — a display case whose pedestals hold album
+  art for my top Spotify tracks, next to a spinning vinyl disc.
 
-You can choose from one of the following two methods to use this repository:
+The floating nav (`app/components/nav.tsx`) tracks the active section with an
+`IntersectionObserver` and scrolls between them. Its `SECTION_IDS` list must stay
+in sync with the sections rendered by `app/page.tsx`.
 
-### One-Click Deploy
+## How the drawing animation works
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
+`app/components/animated-svg.tsx` (`AnimatedSvg`) fetches an SVG from `public/`,
+inlines it, and animates each `path`/`line`/`polyline`/`rect` with anime.js
+`svg.createDrawable`. `app/components/scroll-effects.tsx` orchestrates it: on
+entering a section it hides the content, dispatches `svg:play` on every SVG
+container, waits for the matching `svg:complete` events, then fades the rest of
+the content in. `DisplayCase` listens for those same events so the album covers
+only appear once the case has finished drawing.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/examples/tree/main/solutions/blog&project-name=blog&repository-name=blog)
+## Spotify integration
 
-### Clone and Deploy
+The Random section is driven by the Spotify Web API:
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [pnpm](https://pnpm.io/installation) to bootstrap the example:
+1. `app/lib/spotify.ts` refreshes an access token, fetches my top tracks, and
+   extracts a primary color from each album cover with `node-vibrant`.
+2. `app/api/spotify/disc-color/route.ts` exposes that as JSON, cached for a day
+   via `unstable_cache`. It runs on the Node runtime because `node-vibrant`
+   needs Node APIs.
+3. `app/components/display-case.tsx` places the covers on pedestals, and
+   `app/components/spotify-disc.tsx` paints the vinyl with the selected track's
+   color and handles playback through the Spotify Embed iFrame API.
+
+Everything degrades gracefully: with no credentials configured the endpoint
+returns an empty track list, the case renders empty, and the disc falls back to
+Spotify green.
+
+Copy `env.example` to `.env.local` and follow the instructions there to mint a
+refresh token. The `/api/spotify/login` and `/api/spotify/callback` routes exist
+only for that one-time setup flow.
+
+## Development
 
 ```bash
-pnpm create next-app --example https://github.com/vercel/examples/tree/main/solutions/blog blog
+npm install
+npm run dev
 ```
 
-Then, run Next.js in development mode:
+Then open http://127.0.0.1:3000. Use `127.0.0.1` rather than `localhost` so the
+Spotify OAuth redirect URI matches.
 
-```bash
-pnpm dev
-```
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Start the dev server |
+| `npm run build` | Production build |
+| `npm run start` | Serve the production build |
+| `npm run deploy` | Deploy a preview to Vercel |
+| `npm run deploy:prod` | Deploy to production |
 
-Deploy it to the cloud with [Vercel](https://vercel.com/templates) ([Documentation](https://nextjs.org/docs/app/building-your-application/deploying)).
+## Stack
+
+Next.js 16 (App Router), React 19, Tailwind CSS v4, anime.js for animation,
+Geist plus a few Google display fonts, and Vercel Analytics / Speed Insights.
+Deployed on Vercel.

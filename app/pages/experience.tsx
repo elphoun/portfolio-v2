@@ -1,5 +1,5 @@
 import { SectionContainer } from '../components/section-container'
-import { AnimatedSvg } from '../components/home-hero-draw'
+import { AnimatedSvg } from '../components/animated-svg'
 import { ExperienceGallery } from '../components/experience-gallery'
 import { Fredericka_the_Great } from "next/font/google"
 
@@ -14,25 +14,11 @@ const experiences = [
         priority: 3,
     },
     {
-        company: 'chatime',
-        roles: ['Tearista'],
-        logo: '/experience/chatime-logo.png',
-        linkedin: 'https://www.linkedin.com/company/chatime/',
-        priority: 1,
-    },
-    {
         company: 'UW DSC',
         roles: ['President', "Advisor", "SWE"],
         logo: '/experience/dsc-logo.svg',
         linkedin: 'https://www.linkedin.com/company/waterloo-data-science-club/',
         priority: 1,
-    },
-    {
-        company: 'cxc hackathon',
-        roles: ['Director'],
-        logo: '/experience/cxc-logo.svg',
-        linkedin: 'https://www.linkedin.com/company/cxc-global',
-        priority: 2,
     },
     {
         company: 'Hack the 6ix',
@@ -42,11 +28,25 @@ const experiences = [
         priority: 2,
     },
     {
+        company: 'cxc hackathon',
+        roles: ['Director'],
+        logo: '/experience/cxc-logo.svg',
+        linkedin: 'https://www.linkedin.com/company/cxc-global',
+        priority: 2,
+    },
+    {
         company: 'ETB',
         roles: ['SWE Intern'],
         logo: '/experience/etb-logo.svg',
         linkedin: 'https://www.linkedin.com/search/results/all/?keywords=Enter%20the%20Battlefield',
         priority: 2,
+    },
+    {
+        company: 'chatime',
+        roles: ['Tearista'],
+        logo: '/experience/chatime-logo.png',
+        linkedin: 'https://www.linkedin.com/company/chatime/',
+        priority: 1,
     },
 ]
 
@@ -64,7 +64,7 @@ export const ExperiencePage = () => (
                     src='/assets/machine.svg'
                     className='absolute left-1/2 top-1/2 w-[80%] max-w-[34rem] h-auto'
                     style={{ transform: 'translate(-50%, -50%) rotate(-12deg)' }}
-                    duration={1200}
+                    duration={800}
                     delayStep={0}
                     autoplay={false}
                     delayOnDesktopOnly={true}
@@ -73,7 +73,7 @@ export const ExperiencePage = () => (
                     src='/assets/purple_cogfly.svg'
                     className='absolute top-[4%] right-[4%] w-[34%] max-w-[12rem] h-auto'
                     style={{ transform: 'rotate(20deg)' }}
-                    duration={1200}
+                    duration={800}
                     delayStep={0}
                     autoplay={false}
                     delayOnDesktopOnly={true}
@@ -82,7 +82,7 @@ export const ExperiencePage = () => (
                     src='/assets/red_cogfly.svg'
                     className='absolute bottom-[4%] left-[4%] w-[38%] max-w-[14rem] h-auto'
                     style={{ transform: 'scaleX(-1) rotate(-12deg)' }}
-                    duration={1200}
+                    duration={800}
                     delayStep={0}
                     autoplay={false}
                     delayOnDesktopOnly={true}
