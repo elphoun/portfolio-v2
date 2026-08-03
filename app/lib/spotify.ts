@@ -3,11 +3,11 @@ import { Vibrant } from 'node-vibrant/node'
 
 const TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token'
 /** How many top tracks to surface in the display case (one per pedestal). */
-export const TOP_TRACKS_LIMIT = 6
-const TOP_TRACKS_ENDPOINT = `https://api.spotify.com/v1/me/top/tracks?limit=${TOP_TRACKS_LIMIT}&time_range=long_term`
+const TOP_TRACKS_LIMIT = 6
+const TOP_TRACKS_ENDPOINT = `https://api.spotify.com/v1/me/top/tracks?limit=${TOP_TRACKS_LIMIT}`
 
 /** Fallback color used when Spotify isn't configured or a request fails. */
-export const FALLBACK_DISC_COLOR = '#1DB954' // Spotify green
+const FALLBACK_DISC_COLOR = '#1DB954' // Spotify green
 
 export type DiscTrack = {
     /** Stable id (Spotify track id) used for selection. */
@@ -17,11 +17,6 @@ export type DiscTrack = {
     album: string
     albumImage: string | null
     url: string
-    /**
-     * Spotify's deprecated preview_url, kept only for reference. Playback goes
-     * through the Embed iFrame API instead (see components/spotify-disc.tsx).
-     */
-    previewUrl: string | null
     /** Hex color extracted from this track's album art. */
     color: string
 }
@@ -82,7 +77,6 @@ function pickAlbumImage(images: SpotifyImage[] | undefined): string | null {
 type RawTrack = {
     id: string
     name: string
-    preview_url?: string | null
     external_urls?: { spotify?: string }
     artists?: Array<{ name: string }>
     album?: { name?: string; images?: SpotifyImage[] }
@@ -103,7 +97,7 @@ async function getTopTracks(accessToken: string): Promise<RawTrack[]> {
  * Extract a vibrant "primary" color from an album image URL.
  * Prefers the Vibrant swatch, otherwise falls back to the most populous swatch.
  */
-export async function extractPrimaryColor(imageUrl: string): Promise<string | null> {
+async function extractPrimaryColor(imageUrl: string): Promise<string | null> {
     try {
         const res = await fetch(imageUrl, { cache: 'no-store' })
         if (!res.ok) return null
@@ -132,7 +126,6 @@ function toDiscTrack(raw: RawTrack, color: string): DiscTrack {
         album: raw.album?.name ?? '',
         albumImage: pickAlbumImage(raw.album?.images),
         url: raw.external_urls?.spotify ?? '',
-        previewUrl: raw.preview_url ?? null,
         color,
     }
 }

@@ -7,6 +7,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { baseUrl } from './sitemap'
 import { Navbar } from './components/nav'
 import { ScrollEffects } from '@/app/components/scroll-effects'
+import { cn } from './helpers'
 import { ScrollPrompt } from './components/scroll-prompt'
 
 export const metadata: Metadata = {
@@ -37,8 +38,6 @@ export const metadata: Metadata = {
   },
 }
 
-const cx = (...classes) => classes.filter(Boolean).join(' ')
-
 export default function RootLayout({
   children,
 }: {
@@ -47,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cx(
+      className={cn(
         'text-black bg-white overflow-hidden h-full',
         GeistSans.variable,
         GeistMono.variable
@@ -57,7 +56,7 @@ export default function RootLayout({
         <Navbar />
         <ScrollEffects />
         <ScrollPrompt />
-        <main className={cx(
+        <main className={cn(
           "flex flex-col snap-y snap-mandatory overflow-y-scroll items-center justify-start gap-0 min-w-0 h-screen w-full",
           "bg-[linear-gradient(200deg,#946D44_20%,#D9C19D_84%)]"
         )}>

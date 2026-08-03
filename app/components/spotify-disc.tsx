@@ -10,7 +10,6 @@ export type DiscTrack = {
     album: string
     albumImage: string | null
     url: string
-    previewUrl: string | null
     color: string
 }
 
