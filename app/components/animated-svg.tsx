@@ -26,7 +26,7 @@ export function AnimatedSvg({
   className = 'w-full max-w-60 lg:max-w-[580px]',
   style,
   duration = 1200,
-  delayStep = 20,
+  delayStep = 15,
   autoplay = true,
   delayOnDesktopOnly = false,
 }: AnimatedSvgProps) {

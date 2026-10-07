@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-const SCOPES = ['user-top-read'].join(' ')
+const SCOPES = ['playlist-read-private', 'playlist-read-collaborative'].join(' ')
 
 /**
  * One-time helper: start the Spotify OAuth flow to mint a refresh token.

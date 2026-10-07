@@ -1,6 +1,6 @@
 import { HomePage } from './pages/homepage'
 import { ExperiencePage } from './pages/experience'
-import { RandomPage } from './pages/random'
+import { RandomPage } from './pages/songs'
 
 export default function Page() {
   return (

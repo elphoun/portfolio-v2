@@ -1,22 +1,21 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 import {
   HomeOutlineRoundedIcon,
   FolderOpenOutlineIcon,
-  EcoOutlineIcon,
+  MusicNote2RoundedIcon
 } from '../../components/icons'
 import { AnimatedSvg } from './animated-svg'
 
 // Must stay in the same order as the sections rendered by app/page.tsx, since
 // the up/down arrows step through this list by index.
-const SECTION_IDS = ['home', 'experience', 'random']
+const SECTION_IDS = ['home', 'experience', 'songs']
 
 const navItems = [
   { id: 'home',       icon: <HomeOutlineRoundedIcon size={24} strokeWidth={0.7} color="currentColor" /> },
   { id: 'experience', icon: <FolderOpenOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
-  { id: 'random',     icon: <EcoOutlineIcon size={24} strokeWidth={0.7} color="currentColor" /> },
+  { id: 'songs',     icon: <MusicNote2RoundedIcon size={24} strokeWidth={0.7} color="currentColor" /> },
 ]
 
 function scrollToSection(id: string) {

@@ -64,8 +64,6 @@ export const ExperiencePage = () => (
                     src='/assets/machine.svg'
                     className='absolute left-1/2 top-1/2 w-[80%] max-w-[34rem] h-auto'
                     style={{ transform: 'translate(-50%, -50%) rotate(-12deg)' }}
-                    duration={800}
-                    delayStep={0}
                     autoplay={false}
                     delayOnDesktopOnly={true}
                 />
@@ -73,8 +71,6 @@ export const ExperiencePage = () => (
                     src='/assets/purple_cogfly.svg'
                     className='absolute top-[4%] right-[4%] w-[34%] max-w-[12rem] h-auto'
                     style={{ transform: 'rotate(20deg)' }}
-                    duration={800}
-                    delayStep={0}
                     autoplay={false}
                     delayOnDesktopOnly={true}
                 />
@@ -82,8 +78,6 @@ export const ExperiencePage = () => (
                     src='/assets/red_cogfly.svg'
                     className='absolute bottom-[4%] left-[4%] w-[38%] max-w-[14rem] h-auto'
                     style={{ transform: 'scaleX(-1) rotate(-12deg)' }}
-                    duration={800}
-                    delayStep={0}
                     autoplay={false}
                     delayOnDesktopOnly={true}
                 />

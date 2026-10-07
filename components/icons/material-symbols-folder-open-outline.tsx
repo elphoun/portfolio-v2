@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export function FolderOpenOutlineIcon({
+export default function FolderOpenOutlineIcon({
   size = 24,
   color = "currentColor",
   strokeWidth = 0.7,

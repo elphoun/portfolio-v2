@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export function CircleIcon({
+export default function CircleIcon({
   size = 24,
   color = "currentColor",
   strokeWidth = 2,

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export function HomeOutlineRoundedIcon({
+export default function HomeOutlineRoundedIcon({
   size = 24,
   color = "currentColor",
   strokeWidth = 0.7,

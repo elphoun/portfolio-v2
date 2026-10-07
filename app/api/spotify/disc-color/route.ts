@@ -12,7 +12,7 @@ const CACHE_TAG = 'spotify-disc-color'
 const getCachedDiscColor = unstable_cache(
     () => getTopTrackDiscColor(),
     // Bump the version suffix whenever the payload shape changes to bust the cache.
-    [CACHE_TAG, 'v4-top6-preview'],
+    [CACHE_TAG, 'v6-playlist-items-top6'],
     { revalidate: 86400, tags: [CACHE_TAG] }
 )
 

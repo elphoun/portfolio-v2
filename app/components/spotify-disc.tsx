@@ -199,9 +199,9 @@ export function SpotifyDisc({
 
     return (
         <>
-        <div className={`flex flex-col items-center gap-3 ${className}`}>
+        <div className={`isolate flex flex-col items-center gap-3 ${className}`}>
             <div
-                className={`relative animate-spin ${size ? '' : DEFAULT_SIZE_CLASS}`}
+                className={`relative -z-10 animate-spin ${size ? '' : DEFAULT_SIZE_CLASS}`}
                 style={{
                     width: size,
                     height: size,
@@ -254,18 +254,13 @@ export function SpotifyDisc({
                 .disc-label { animation: discLabelFade 400ms ease; }
                 @keyframes discLabelFade { from { opacity: 0; } to { opacity: 1; } }
             `}</style>
-        </div>
-
-        {/* Spotify Embed player: the API replaces this div with its iframe.
-            Kept in the tree (even before draw) so the controller can attach.
-            It sits outside the disc wrapper on purpose -- the disc is a backdrop
-            at a negative z-index, and an iframe buried in there can't be clicked. */}
-        <div
-            className={`fixed bottom-4 left-1/2 z-20 w-[calc(100%-1.5rem)] max-w-[20rem] -translate-x-1/2 overflow-hidden rounded-xl shadow-md transition-opacity duration-300 md:bottom-20 md:left-auto md:right-20 md:w-full md:translate-x-0 ${
+            <div
+                className={`absolute left-0 top-1/5 z-20 w-[calc(100%-1.5rem)] max-w-[24rem] overflow-hidden rounded-xl shadow-md transition-opacity duration-300 ${
                 track ? 'opacity-100' : 'pointer-events-none opacity-0'
             }`}
-        >
-            <div ref={embedRef} />
+            >
+                <div ref={embedRef} />
+            </div>
         </div>
         </>
     )

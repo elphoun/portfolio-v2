@@ -34,7 +34,7 @@ export const HomePage = () => (
     <SectionContainer id="home">
         <div className="flex w-full flex-col lg:flex-row items-center justify-center gap-8 sm:gap-10 md:gap-14 lg:gap-16 xl:gap-20 px-4 md:px-0">
             <div className="flex flex-col items-center lg:items-start gap-5 md:gap-6">
-                <h1 className={`${fredericka.className} text-center lg:text-left leading-none text-[clamp(2.5rem,6vw,4.5rem)]`}>
+                <h1 className={`${fredericka.className} text-center lg:text-left leading-none text-[clamp(2rem,5vw,4rem)]`}>
                     Michael
                     <br />
                     Zhang
@@ -48,10 +48,10 @@ export const HomePage = () => (
                                     alt={social.name}
                                     width={32}
                                     height={32}
-                                    className="h-5 w-5 md:h-6 md:w-6 lg:h-7 lg:w-7 xl:h-8 xl:w-8"
+                                    className="h-5 w-5 md:h-6 md:w-6 lg:h-7 lg:w-7"
                                 />
                             </Link>
-                            {index < socials.length - 1 ? <CircleIcon size={4} fill="#FAEED6" /> : null}
+                            {index < socials.length - 1 ? <CircleIcon size={4} /> : null}
                         </div>
                     ))}
                 </div>
