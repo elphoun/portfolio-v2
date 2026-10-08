@@ -9,8 +9,19 @@ export default function MusicNote2RoundedIcon({
   flipHorizontal = false,
   flipVertical = false,
   padding = 0
+}: {
+  size?: number;
+  color?: string;
+  strokeWidth?: number;
+  background?: string;
+  opacity?: number;
+  rotation?: number;
+  shadow?: number;
+  flipHorizontal?: boolean;
+  flipVertical?: boolean;
+  padding?: number;
 }) {
-  const transforms = [];
+  const transforms: string[] = [];
   if (rotation !== 0) transforms.push(`rotate(${rotation}deg)`);
   if (flipHorizontal) transforms.push('scaleX(-1)');
   if (flipVertical) transforms.push('scaleY(-1)');
